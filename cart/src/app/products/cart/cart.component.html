@@ -1,0 +1,97 @@
+<!-- <p>cart works!</p> -->
+
+<div class="container border border-dark m-5 p-5" *ngIf="cartitems.length==0">
+    <div class="row text-center">
+        <div class="col">
+            <img style="width: 200px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4WtoKXspty0fELBYjr4kJPNImDUrUcyrF5A&usqp=CAU" alt="">
+            <h3> Your Cart is empty</h3>
+            <button  routerLink="/" class="btn btn-dark mt-2">Shop Now <i class="fa fa-cart-shopping"></i></button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container"  *ngIf="cartitems.length!=0"> 
+    <div class="row">
+        <div class="col">
+            
+    <table class="table border border-dark m-5">
+        <thead>
+            <tr >
+                <th>Number</th>
+                <th>Name</th>
+                <th>image</th>
+                <th>description</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of cartitems; let i= index">
+                <td>{{i+1}}</td>
+                <td>{{product.title}}</td>
+                <td><img [src]="product.image" alt="" style="width: 100px;"></td>
+                <td>{{product.description}}</td>
+                <td>${{product.price}}</td>
+
+
+                <td> <i (click)="removeitem(product)" class="fa fa-trash text-danger"></i></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="float: right ;" class="mb-5">
+        <button (click)="removeall()" class="btn btn-danger">Empty cart</button> &nbsp;
+        <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View more</button>&nbsp;
+        <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Check out</button>&nbsp;
+        <b>Grand Total: <span class="text-danger">${{grandTotal}}</span></b>
+
+    </div>
+</div>
+</div>
+</div>
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h2><b>Delivery Address</b> </h2>
+          <form action="" class="form-control">
+            <input class="form-control mt-2" type="text" placeholder="Name">
+            <input class="form-control mt-2" type="text" placeholder="Adress/House No">
+            <input class="form-control mt-2" type="text" placeholder="Pincode">
+            <input class="form-control mt-2" type="text" placeholder="State">
+            <input class="form-control mt-2" type="text" placeholder="Country">
+            <input class="form-control mt-2" type="text" placeholder="Contact No">
+            <input class="form-control mt-2" type="text" placeholder="E-mail">
+          </form>
+          <div [ngSwitch]="grandTotal">
+            <h4>Discounts:</h4>
+            <img *ngSwitchCase="3" (click)="dicount3per($event.target)" width="100" src="https://t4.ftcdn.net/jpg/00/98/97/57/360_F_98975745_sgSVAhoA5L8DgfEgoamIEZcKh0J6aBNI.jpg" alt="">
+            <img  *ngSwitchCase="10" (click)="dicount10per()" width="100" src="https://pbs.twimg.com/media/CTnXj84W4AAEmXc.png" alt="">
+            <img  *ngSwitchCase="30" (click)="dicount30per()" width="100" src="https://www.pngitem.com/pimgs/m/123-1232870_30-discount-0-hd-png-download.png" alt="">           
+            <img  *ngSwitchCase="50" (click)="dicount50per()" width="100" src="https://cdn5.vectorstock.com/i/1000x1000/95/09/50-off-discount-promotion-sale-sale-promo-market-vector-24759509.jpg" alt="">
+            <img  *ngSwitchDefault="3" (click)="dicount3per($event.target)" width="100" src="https://media.istockphoto.com/id/1136155337/vector/promo-code-coupon-code-flat-vector-set-design-illustration-on-white-background.jpg?s=612x612&w=0&k=20&c=sM95EWp2rPqPfp0pGxKi4Jkjgz-0buvGtSSZkNQYIao=" alt="">
+          </div>
+
+          <div>
+            <h5>Your Grand Total is here: <span class="text-danger">{{updateTotal}}</span></h5>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="proceed()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Proceed</button>
+        </div>
+      </div>
+    </div>
+  </div>
